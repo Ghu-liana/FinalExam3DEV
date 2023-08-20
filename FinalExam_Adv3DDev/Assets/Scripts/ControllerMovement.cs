@@ -4,10 +4,10 @@ using UnityEngine;
 using System.IO;
 using System.IO.Ports;
 
-public class Controller_movement : MonoBehaviour
+public class ControllerMovement : MonoBehaviour
 {
     // FOR CONTROLS
-    public float speed;
+    [SerializeField] public float speed = 6.0f;
     private float amountToMove;
     public SerialPort sp = new SerialPort("COM3", 9600);
 
@@ -17,6 +17,8 @@ public class Controller_movement : MonoBehaviour
         sp.Open();
         sp.ReadTimeout = 1; // if this is higher Unity might freeze trying to read the Serial Port
 
+        //rb = GetComponent<Rigidbody>();
+        //rb.freezeRotation = true;
         
 
     }
@@ -38,11 +40,11 @@ public class Controller_movement : MonoBehaviour
                 {
                     transform.Translate(Vector3.right * amountToMove, Space.World);
                 }
-                if(x == 3)
+                if (x == 3)
                 {
                     transform.Translate(Vector3.back * amountToMove, Space.World);
                 }
-                if(x == 4)
+                if (x == 4)
                 {
                     transform.Translate(Vector3.forward * amountToMove, Space.World);
                 }
@@ -51,22 +53,13 @@ public class Controller_movement : MonoBehaviour
             catch (System.Exception)
             {
 
-                
+
             }
         }
+
     }
 
     
 
-    //void MoveObject(int Direction)
-    //{
-    //    if(x == 1)
-    //    {
-    //        transform.Translate(Vector3.left * amountToMove, Space.World);  
-    //    }
-    //    if(x == 2)
-    //    {
-    //        transform.Translate(Vector3.right * amountToMove, Space.World);
-    //    }
-    //}
+    
 }
