@@ -10,6 +10,7 @@ public class EnemyAI : MonoBehaviour
     {
         Wandering,
         ChaseTarget,
+        Flee,
     }
 
     public Transform agent;
@@ -25,6 +26,8 @@ public class EnemyAI : MonoBehaviour
 
     public Transform target;
     NavMeshAgent navMeshAgent;
+
+    public PlayerAction script;
 
     void Start()
     {
@@ -47,6 +50,12 @@ public class EnemyAI : MonoBehaviour
             case State.ChaseTarget:
                 navMeshAgent.SetDestination(target.position);
                 moveSpeed = 7f;
+                FleeBehaviour(); // if player is powered up, change to flee!
+                break;
+
+            case State.Flee:
+                Vector3 fleePosition = -target.position;
+                navMeshAgent.SetDestination(fleePosition);
                 break;
 
             default:
@@ -64,6 +73,18 @@ public class EnemyAI : MonoBehaviour
         else // if target is not within range
         {
             state = State.Wandering;
+        }
+    }
+
+    void FleeBehaviour()
+    {
+        if (script.poweredUp == true)
+        {
+            state = State.Flee;
+        }
+        else
+        {
+            state = State.ChaseTarget;
         }
     }
 
