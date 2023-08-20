@@ -46,6 +46,7 @@ public class EnemyAI : MonoBehaviour
 
             case State.ChaseTarget:
                 navMeshAgent.SetDestination(target.position);
+                moveSpeed = 7f;
                 break;
 
             default:
@@ -55,7 +56,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FindTarget()
     {
-        float targetRange = 4f;
+        float targetRange = 6f;
         if(Vector3.Distance(target.position, agent.position) < targetRange) // if player is within target range
         {
             state = State.ChaseTarget;
