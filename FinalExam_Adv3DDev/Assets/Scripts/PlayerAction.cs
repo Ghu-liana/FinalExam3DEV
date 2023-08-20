@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerAction : MonoBehaviour
+public class PlayerAction : MonoBehaviour, IDataPersistence
 {
     private ControllerMovement controller;
     
@@ -13,7 +13,8 @@ public class PlayerAction : MonoBehaviour
 
     public int score;
     public bool poweredUp = false;
-    
+    public DataPersistenceManager save;
+
 
     void Start()
     {
@@ -40,5 +41,15 @@ public class PlayerAction : MonoBehaviour
             scoreText.text = "TOTAL FRUITS: " + score.ToString();
         }
         
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.score = data.score;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.score = this.score;
     }
 }
