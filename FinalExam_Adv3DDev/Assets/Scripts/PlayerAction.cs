@@ -1,39 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAction : MonoBehaviour
 {
     private ControllerMovement controller;
     
+    ScoreManager instance = new ScoreManager();
 
-    public int collectCount = 0;
+    [SerializeField] private Text scoreText;
+
+    public int score;
     public bool poweredUp = false;
+    
 
     void Start()
     {
         controller = GetComponent<ControllerMovement>();
+        score = instance.score;
         
     }
 
-    void Update()
-    {
-        
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Collectable")
         {
             Destroy(other.gameObject);
-            collectCount += 1;
+            score += 1;
+            scoreText.text = "TOTAL FRUITS: " + score.ToString();
         }
         if (other.tag == "PowerUp")
         {
             Destroy(other.gameObject);
-            collectCount += 1;
+            score += 1;
             poweredUp = true;
             controller.speed = 12f;
+            scoreText.text = "TOTAL FRUITS: " + score.ToString();
         }
+        
     }
 }
